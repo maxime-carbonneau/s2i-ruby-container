@@ -42,6 +42,10 @@ RUN wget https://nodejs.org/download/release/v5.12.0/node-v5.12.0-linux-x64.tar.
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/node /usr/local/bin && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/npm /usr/local/bin
 
+RUN /usr/local/bin/npm install -g bower && /usr/local/bin/npm install -g gulp && \
+    ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/bower /usr/local/bin && \
+    ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/gulp /usr/local/bin
+
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
