@@ -26,10 +26,21 @@ LABEL summary="$SUMMARY" \
       usage="s2i build https://github.com/sclorg/s2i-ruby-container.git --context-dir=2.4/test/puma-test-app/ centos/ruby-22-centos7 ruby-sample-app" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
-RUN INSTALL_PKGS="rh-ruby22 rh-ruby22-ruby-devel rh-ruby22-rubygem-rake v8314 rh-ruby22-rubygem-bundler" && \
+RUN INSTALL_PKGS="rh-ruby22 rh-ruby22-ruby-devel rh-ruby22-rubygem-rake v8314 rh-ruby22-rubygem-bundler ImageMagick glibc fontconfig freetype freetype-devel fontconfig-devel wget bzip2 file zip" && \
     yum install -y centos-release-scl && \
     yum install -y --setopt=tsflags=nodocs  $INSTALL_PKGS && rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
+
+RUN yum install -y --setopt=tsflags=nodocs https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
+
+RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/ && \
+    ln -sf /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
+
+RUN wget https://nodejs.org/download/release/v5.12.0/node-v5.12.0-linux-x64.tar.gz && \
+    tar xvzf node-v5.12.0-linux-x64.tar.gz -C /usr/local/share/ && \
+    ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/node /usr/local/bin && \
+    ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/npm /usr/local/bin
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
