@@ -29,9 +29,23 @@ LABEL summary="$SUMMARY" \
 # To use subscription inside container yum command has to be run first (before yum-config-manager)
 # https://access.redhat.com/solutions/1443553
 RUN yum install -y centos-release-scl && \
-    INSTALL_PKGS="rh-ruby24 rh-ruby24-ruby-devel rh-ruby24-rubygem-rake rh-ruby24-rubygem-bundler" && \
+    INSTALL_PKGS="rh-ruby24 rh-ruby24-ruby-devel rh-ruby24-rubygem-rake rh-ruby24-rubygem-bundler ImageMagick" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
+
+RUN yum localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
+    yum install -y git make cmake gcc-c++ libmad-devel libid3tag-devel libsndfile-devel gd-devel boost-devel && \
+    git clone https://github.com/bbc/audiowaveform.git && \
+    cd audiowaveform && \
+    curl -L -O https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
+    tar xzf release-1.10.0.tar.gz && \
+    ln -s googletest-release-1.10.0/googletest googletest && \
+    ln -s googletest-release-1.10.0/googlemock googlemock && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make && \
+    make install
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
