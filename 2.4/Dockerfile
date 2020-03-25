@@ -41,7 +41,7 @@ RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x
 
 RUN wget https://nodejs.org/download/release/v5.12.0/node-v5.12.0-linux-x64.tar.gz && \
     tar xvzf node-v5.12.0-linux-x64.tar.gz -C /usr/local/share/ && \
-    ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/node /usr/local/bin
+    ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/node /usr/local/bin && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/npm /usr/local/bin
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
