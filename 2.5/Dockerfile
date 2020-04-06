@@ -47,19 +47,19 @@ ImageMagick \
     yum -y clean all --enablerepo='*' && \
     rpm -V ${INSTALL_PKGS}
 
-RUN yum localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
-    yum install -y git make cmake gcc-c++ libmad-devel libid3tag-devel libsndfile-devel gd-devel boost-devel && \
-    git clone https://github.com/bbc/audiowaveform.git && \
-    cd audiowaveform && \
-    curl -L -O https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar xzf release-1.10.0.tar.gz && \
-    ln -s googletest-release-1.10.0/googletest googletest && \
-    ln -s googletest-release-1.10.0/googlemock googlemock && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make && \
-    make install
+# RUN yum localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
+#     yum install -y git make cmake gcc-c++ libmad-devel libid3tag-devel libsndfile-devel gd-devel boost-devel && \
+#     git clone https://github.com/bbc/audiowaveform.git && \
+#     cd audiowaveform && \
+#     curl -L -O https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
+#     tar xzf release-1.10.0.tar.gz && \
+#     ln -s googletest-release-1.10.0/googletest googletest && \
+#     ln -s googletest-release-1.10.0/googlemock googlemock && \
+#     mkdir build && \
+#     cd build && \
+#     cmake .. && \
+#     make && \
+#     make install
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
