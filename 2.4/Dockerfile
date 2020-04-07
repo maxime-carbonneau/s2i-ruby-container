@@ -33,13 +33,12 @@ RUN yum install -y centos-release-scl && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*'
 
-RUN if [[ -n "$IMAGE" ]] ; then yum install -y centos-release-scl && \
+RUN yum install -y centos-release-scl && \
     INSTALL_PKGS="ImageMagick" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && rpm -V $INSTALL_PKGS && \
-    yum -y clean all --enablerepo='*' \
-    ; fi
+    yum -y clean all --enablerepo='*'
 
-RUN if [[ -n "$AUDIO" ]] ; then yum localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
+RUN yum localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
     yum install -y git make cmake gcc-c++ libmad-devel libid3tag-devel libsndfile-devel gd-devel boost-devel && \
     git clone https://github.com/bbc/audiowaveform.git && \
     cd audiowaveform && \
@@ -53,8 +52,7 @@ RUN if [[ -n "$AUDIO" ]] ; then yum localinstall -y --nogpgcheck https://downloa
     make && \
     make install && \
     cd .. && \
-    rm -rf audiowaveform \
-    ; fi
+    rm -rf audiowaveform
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
