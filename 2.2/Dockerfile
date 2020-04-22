@@ -34,12 +34,12 @@ RUN INSTALL_PKGS="rh-ruby22 rh-ruby22-ruby-devel rh-ruby22-rubygem-rake v8314 rh
 RUN yum install -y --setopt=tsflags=nodocs https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm
 
 RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
-    tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/ && \
+    tar xjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/ && \
     ln -sf /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin && \
     rm phantomjs-2.1.1-linux-x86_64.tar.bz2
 
 RUN wget https://nodejs.org/download/release/v5.12.0/node-v5.12.0-linux-x64.tar.gz && \
-    tar xvzf node-v5.12.0-linux-x64.tar.gz -C /usr/local/share/ && \
+    tar xzf node-v5.12.0-linux-x64.tar.gz -C /usr/local/share/ && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/node /usr/local/bin && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/npm /usr/local/bin && \
     rm node-v5.12.0-linux-x64.tar.gz
