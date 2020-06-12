@@ -13,13 +13,24 @@ source ${THISDIR}/test-lib-openshift.sh
 
 function test_ruby_integration() {
   local image_name=$1
-  local version=$2
-  local import_image=${3:-}
-  VERSION=$version ct_os_test_s2i_app "${image_name}" \
-                                      "https://github.com/sclorg/s2i-ruby-container.git" \
-                                      ${version}/test/puma-test-app \
-                                      ".*" \
-                                      8080 http 200 "" \
-                                      "${import_image}"
+  ct_os_test_s2i_app "${image_name}" \
+                     "https://github.com/sclorg/s2i-ruby-container.git" \
+                     "${VERSION}/test/puma-test-app" \
+                     ".*"
 }
+
+# Check the imagestream
+function test_ruby_imagestream() {
+  case ${OS} in
+    rhel7|centos7) ;;
+    *) echo "Imagestream testing not supported for $OS environment." ; return 0 ;;
+  esac
+
+  ct_os_test_image_stream_s2i "${THISDIR}/imagestreams/ruby-${OS}.json" "${IMAGE_NAME}" \
+                              "https://github.com/sclorg/s2i-ruby-container.git" \
+                              "${VERSION}/test/puma-test-app" \
+                              ".*"
+}
+
+# vim: set tabstop=2:shiftwidth=2:expandtab:
 
