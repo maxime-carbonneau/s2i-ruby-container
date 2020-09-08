@@ -45,7 +45,7 @@ ${RUBY_SCL}-rubygem-bundler \
     rpm -V ${INSTALL_PKGS}
 
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="ImageMagick" && \
+    INSTALL_PKGS="ImageMagick file" && \
     yum install -y --setopt=tsflags=nodocs ${INSTALL_PKGS} && \
     yum -y clean all --enablerepo='*' && \
     rpm -V ${INSTALL_PKGS}
