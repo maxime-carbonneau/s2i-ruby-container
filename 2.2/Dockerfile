@@ -42,7 +42,8 @@ RUN wget https://nodejs.org/download/release/v5.12.0/node-v5.12.0-linux-x64.tar.
     tar xzf node-v5.12.0-linux-x64.tar.gz -C /usr/local/share/ && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/node /usr/local/bin && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/npm /usr/local/bin && \
-    rm node-v5.12.0-linux-x64.tar.gz
+    rm node-v5.12.0-linux-x64.tar.gz && \
+    /usr/local/bin/npm install -g npm@latest-3
 
 RUN /usr/local/bin/npm install -g bower && \
     ln -sf /usr/local/share/node-v5.12.0-linux-x64/bin/bower /usr/local/bin
